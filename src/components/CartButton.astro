@@ -1,0 +1,54 @@
+---
+import IconShoppingBag from '@/assets/icons/IconShoppingBag.svg';
+---
+
+<button
+  id="cart-button"
+  class="relative p-2 rounded-md hover:bg-accent/10 transition-colors"
+  aria-label="Shopping cart"
+>
+  <IconShoppingBag class="w-6 h-6" />
+  <span
+    id="cart-count"
+    class="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center hidden"
+  >
+    0
+  </span>
+</button>
+
+<script>
+  import { getCartItemCount } from '@/lib/cart';
+
+  function updateCartButton() {
+    const count = getCartItemCount();
+    const countElement = document.getElementById('cart-count');
+    
+    if (countElement) {
+      if (count > 0) {
+        countElement.textContent = count.toString();
+        countElement.classList.remove('hidden');
+      } else {
+        countElement.classList.add('hidden');
+      }
+    }
+  }
+
+  // Update on page load
+  document.addEventListener('astro:page-load', updateCartButton);
+
+  // Update when cart changes
+  window.addEventListener('cart-updated', updateCartButton);
+
+  // Handle click
+  document.addEventListener('astro:page-load', () => {
+    const cartButton = document.getElementById('cart-button');
+    if (cartButton) {
+      cartButton.addEventListener('click', () => {
+        // For now, just log. You can implement a cart drawer here
+        console.log('Cart clicked');
+        // Or redirect to a cart page
+        // window.location.href = '/cart';
+      });
+    }
+  });
+</script>

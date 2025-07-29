@@ -1,0 +1,119 @@
+---
+import type { Product } from '@/lib/products';
+import { isInStock } from '@/lib/products';
+
+export interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const inStock = isInStock(product);
+---
+
+<article class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <!-- Product Image -->
+  <div class="aspect-square bg-muted rounded-lg overflow-hidden">
+    {product.image ? (
+      <img 
+        src={product.image} 
+        alt={product.title}
+        class="w-full h-full object-cover"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center">
+        <div class="text-muted-foreground text-sm">Product Image</div>
+      </div>
+    )}
+  </div>
+  
+  <!-- Product Details -->
+  <div>
+    <h1 class="text-3xl font-bold text-foreground mb-4">{product.title}</h1>
+    <p class="text-lg text-muted-foreground mb-6">{product.summary}</p>
+    
+    <div class="flex items-center gap-4 mb-8">
+      <span class="text-3xl font-bold text-accent">${product.price}</span>
+      {inStock ? (
+        <button
+          id="add-to-cart"
+          class="bg-accent text-background px-8 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors"
+          data-product-id={product.id}
+        >
+          Add to Cart
+        </button>
+      ) : (
+        <button 
+          disabled
+          class="bg-muted text-muted-foreground px-8 py-3 rounded-md font-medium cursor-not-allowed"
+        >
+          Out of Stock
+        </button>
+      )}
+    </div>
+
+    {product.category === 'digital' && (
+      <div class="bg-accent/10 border border-accent/20 rounded-md p-4 mb-6">
+        <p class="text-sm text-accent font-medium">
+          ⚡ Instant digital delivery after purchase
+        </p>
+      </div>
+    )}
+    
+    <div class="prose prose-foreground max-w-none">
+      <h2>Description</h2>
+      <p>{product.description}</p>
+      
+      {product.features.length > 0 && (
+        <>
+          <h2>Features</h2>
+          <ul>
+            {product.features.map(feature => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <h2>Shipping & Returns</h2>
+      {product.category === 'digital' ? (
+        <p>This is a digital product. You'll receive download instructions via email immediately after purchase.</p>
+      ) : (
+        <p>Free shipping on all orders. 30-day money-back guarantee. See our full return policy for details.</p>
+      )}
+    </div>
+  </div>
+</article>
+
+<script>
+  import { addToCart } from '@/lib/cart';
+  import { getProductBySlug } from '@/lib/products';
+
+  document.addEventListener('astro:page-load', () => {
+    const addButton = document.getElementById('add-to-cart') as HTMLButtonElement;
+    
+    if (addButton) {
+      const productId = addButton.getAttribute('data-product-id');
+      console.log('Product viewed:', productId);
+      
+      addButton.addEventListener('click', () => {
+        const slug = window.location.pathname.split('/').pop();
+        if (slug) {
+          const product = getProductBySlug(slug);
+          if (product) {
+            addToCart(product);
+            
+            // Update button text temporarily
+            const originalText = addButton.textContent;
+            addButton.textContent = 'Added to Cart!';
+            addButton.disabled = true;
+            
+            setTimeout(() => {
+              addButton.textContent = originalText;
+              addButton.disabled = false;
+            }, 2000);
+          }
+        }
+      });
+    }
+  });
+</script>

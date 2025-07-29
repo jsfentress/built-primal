@@ -1,0 +1,170 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import { SITE } from "@/config";
+---
+
+<Layout title={`Cart | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="mx-auto max-w-app px-4">
+    <section class="my-8">
+      <h1 class="text-3xl font-bold text-foreground mb-8">Shopping Cart</h1>
+      
+      <div id="cart-empty" class="text-center py-12 hidden">
+        <p class="text-muted-foreground mb-4">Your cart is empty</p>
+        <LinkButton href="/store" class="inline-flex">
+          Continue Shopping
+        </LinkButton>
+      </div>
+      
+      <div id="cart-content" class="hidden">
+        <div id="cart-items" class="space-y-4 mb-8">
+          <!-- Cart items will be inserted here -->
+        </div>
+        
+        <div class="border-t pt-4">
+          <div class="flex justify-between items-center mb-6">
+            <span class="text-xl font-semibold">Total:</span>
+            <span id="cart-total" class="text-2xl font-bold text-accent">$0</span>
+          </div>
+          
+          <div class="flex gap-4">
+            <LinkButton href="/store" variant="outline" class="flex-1">
+              Continue Shopping
+            </LinkButton>
+            <button
+              id="checkout-button"
+              class="flex-1 bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors"
+            >
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import { getCart, removeFromCart, updateQuantity, createCheckoutSession } from '@/lib/cart';
+
+  function renderCart() {
+    const cart = getCart();
+    const emptyElement = document.getElementById('cart-empty');
+    const contentElement = document.getElementById('cart-content');
+    const itemsElement = document.getElementById('cart-items');
+    const totalElement = document.getElementById('cart-total');
+
+    if (!emptyElement || !contentElement || !itemsElement || !totalElement) return;
+
+    if (cart.items.length === 0) {
+      emptyElement.classList.remove('hidden');
+      contentElement.classList.add('hidden');
+    } else {
+      emptyElement.classList.add('hidden');
+      contentElement.classList.remove('hidden');
+
+      // Render items
+      itemsElement.innerHTML = cart.items.map(item => `
+        <div class="flex items-center gap-4 bg-muted/20 p-4 rounded-lg">
+          <div class="w-20 h-20 bg-muted rounded flex items-center justify-center flex-shrink-0">
+            ${item.product.image 
+              ? `<img src="${item.product.image}" alt="${item.product.title}" class="w-full h-full object-cover rounded">`
+              : '<span class="text-xs text-muted-foreground">No image</span>'
+            }
+          </div>
+          
+          <div class="flex-1">
+            <h3 class="font-semibold">${item.product.title}</h3>
+            <p class="text-muted-foreground">$${item.product.price}</p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button
+              data-action="decrease"
+              data-product-id="${item.product.id}"
+              class="w-8 h-8 rounded border border-border hover:bg-muted transition-colors"
+            >
+              -
+            </button>
+            <span class="w-12 text-center">${item.quantity}</span>
+            <button
+              data-action="increase"
+              data-product-id="${item.product.id}"
+              class="w-8 h-8 rounded border border-border hover:bg-muted transition-colors"
+            >
+              +
+            </button>
+          </div>
+          
+          <button
+            data-action="remove"
+            data-product-id="${item.product.id}"
+            class="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Remove
+          </button>
+        </div>
+      `).join('');
+
+      // Update total
+      totalElement.textContent = `$${cart.total}`;
+
+      // Add event listeners
+      document.querySelectorAll('[data-action]').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const action = target.dataset.action;
+          const productId = target.dataset.productId;
+
+          if (!productId) return;
+
+          switch (action) {
+            case 'remove':
+              removeFromCart(productId);
+              break;
+            case 'increase':
+              const currentItem = cart.items.find(i => i.product.id === productId);
+              if (currentItem) {
+                updateQuantity(productId, currentItem.quantity + 1);
+              }
+              break;
+            case 'decrease':
+              const item = cart.items.find(i => i.product.id === productId);
+              if (item && item.quantity > 1) {
+                updateQuantity(productId, item.quantity - 1);
+              }
+              break;
+          }
+
+          renderCart();
+        });
+      });
+    }
+  }
+
+  // Checkout handler
+  document.addEventListener('astro:page-load', () => {
+    const checkoutButton = document.getElementById('checkout-button');
+    if (checkoutButton) {
+      checkoutButton.addEventListener('click', async () => {
+        const cart = getCart();
+        const checkoutUrl = await createCheckoutSession(cart);
+        
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        } else {
+          alert('Unable to create checkout session. Please try again.');
+        }
+      });
+    }
+
+    renderCart();
+  });
+
+  // Update when cart changes
+  window.addEventListener('cart-updated', renderCart);
+</script>

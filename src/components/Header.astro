@@ -6,6 +6,7 @@ import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
+import IconShoppingBag from "@/assets/icons/IconShoppingBag.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
@@ -122,6 +123,26 @@ const isActive = (path: string) => {
               <span class="sr-only">Search</span>
             </LinkButton>
           </li>
+          <li class="col-span-1 flex items-center justify-center relative">
+            <LinkButton
+              href="/cart"
+              class:list={[
+                "focus-outline flex p-3 sm:p-1",
+                { "[&>svg]:stroke-accent": isActive("/cart") },
+              ]}
+              ariaLabel="cart"
+              title="Shopping Cart"
+            >
+              <IconShoppingBag />
+              <span class="sr-only">Cart</span>
+              <span
+                id="header-cart-count"
+                class="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center hidden"
+              >
+                0
+              </span>
+            </LinkButton>
+          </li>
           {
             SITE.lightAndDarkMode && (
               <li class="col-span-1 flex items-center justify-center">
@@ -170,4 +191,28 @@ const isActive = (path: string) => {
 
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
+</script>
+
+<script>
+  import { getCartItemCount } from '@/lib/cart';
+
+  function updateHeaderCart() {
+    const count = getCartItemCount();
+    const countElement = document.getElementById('header-cart-count');
+    
+    if (countElement) {
+      if (count > 0) {
+        countElement.textContent = count.toString();
+        countElement.classList.remove('hidden');
+      } else {
+        countElement.classList.add('hidden');
+      }
+    }
+  }
+
+  // Update on page load
+  document.addEventListener('astro:page-load', updateHeaderCart);
+  
+  // Update when cart changes
+  window.addEventListener('cart-updated', updateHeaderCart);
 </script>
