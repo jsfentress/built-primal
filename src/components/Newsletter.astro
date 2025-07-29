@@ -116,8 +116,8 @@
             emailInput.value = '';
             
             // Track conversion
-            if (typeof gtag !== 'undefined') {
-              gtag('event', 'sign_up', {
+            if (typeof window !== 'undefined' && 'gtag' in window) {
+              (window as any).gtag('event', 'sign_up', {
                 method: 'newsletter'
               });
             }
