@@ -13,7 +13,7 @@ export interface Product {
   description: string;
   features: string[];
   stock: number;
-  category: 'equipment' | 'digital' | 'apparel';
+  category: string;
 }
 
 export function getAllProducts(): Product[] {
