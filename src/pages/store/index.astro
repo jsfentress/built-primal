@@ -1,0 +1,62 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+// Product data - in a real app, this would come from a CMS or database
+const products = [
+  {
+    title: "Heavy Primal Rope",
+    slug: "heavy-rope",
+    price: 49,
+    stripe_url: "https://buy.stripe.com/test_heavy_rope_123",
+    image: "/images/products/heavy-rope.jpg",
+    summary: "The ultimate tool for developing rotational strength and building resilience through mindful movement."
+  },
+  {
+    title: "Flow Training Guide",
+    slug: "flow-training-guide",
+    price: 29,
+    stripe_url: "https://buy.stripe.com/test_flow_guide_456",
+    image: "/images/products/flow-guide.jpg",
+    summary: "Your complete roadmap to mastering mindful movement and building resilience through flow training."
+  }
+];
+---
+
+<Layout title={`Store | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="mx-auto max-w-app px-4">
+    <section class="my-8">
+      <h1 class="text-4xl font-bold text-foreground mb-4">Built Primal Store</h1>
+      <p class="text-lg text-muted-foreground mb-8">
+        Premium tools and resources for mindful training and primal movement.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {products.map((product) => (
+          <div class="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-video bg-muted flex items-center justify-center">
+              <div class="text-muted-foreground text-sm">Product Image</div>
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-semibold text-foreground mb-2">{product.title}</h2>
+              <p class="text-muted-foreground mb-4">{product.summary}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-accent">${product.price}</span>
+                <a 
+                  href={product.stripe_url}
+                  class="bg-accent text-background px-6 py-2 rounded-md font-medium hover:bg-accent/90 transition-colors"
+                >
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout> 

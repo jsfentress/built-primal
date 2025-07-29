@@ -3,6 +3,7 @@ import { glob } from "astro/loaders";
 import { SITE } from "@/config";
 
 export const BLOG_PATH = "src/data/blog";
+export const PRODUCTS_PATH = "src/content/products";
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: `./${BLOG_PATH}` }),
@@ -23,4 +24,17 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const products = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.md", base: `./${PRODUCTS_PATH}` }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      slug: z.string(),
+      price: z.number(),
+      stripe_url: z.string(),
+      image: image().or(z.string()).optional(),
+      summary: z.string(),
+    }),
+});
+
+export const collections = { blog, products };
