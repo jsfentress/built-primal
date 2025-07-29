@@ -1,6 +1,7 @@
 ---
 import type { Product } from '@/lib/products';
 import { isInStock } from '@/lib/products';
+import AddToCartButton from './AddToCartButton';
 
 export interface Props {
   product: Product;
@@ -34,13 +35,7 @@ const inStock = isInStock(product);
     <div class="flex items-center gap-4 mb-8">
       <span class="text-3xl font-bold text-accent">${product.price}</span>
       {inStock ? (
-        <button
-          id="add-to-cart"
-          class="bg-accent text-background px-8 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors"
-          data-product-id={product.id}
-        >
-          Add to Cart
-        </button>
+        <AddToCartButton product={product} client:load />
       ) : (
         <button 
           disabled
@@ -83,37 +78,3 @@ const inStock = isInStock(product);
     </div>
   </div>
 </article>
-
-<script>
-  import { addToCart } from '@/lib/cart';
-  import { getProductBySlug } from '@/lib/products';
-
-  document.addEventListener('astro:page-load', () => {
-    const addButton = document.getElementById('add-to-cart') as HTMLButtonElement;
-    
-    if (addButton) {
-      const productId = addButton.getAttribute('data-product-id');
-      console.log('Product viewed:', productId);
-      
-      addButton.addEventListener('click', () => {
-        const slug = window.location.pathname.split('/').pop();
-        if (slug) {
-          const product = getProductBySlug(slug);
-          if (product) {
-            addToCart(product);
-            
-            // Update button text temporarily
-            const originalText = addButton.textContent;
-            addButton.textContent = 'Added to Cart!';
-            addButton.disabled = true;
-            
-            setTimeout(() => {
-              addButton.textContent = originalText;
-              addButton.disabled = false;
-            }, 2000);
-          }
-        }
-      });
-    }
-  });
-</script>
