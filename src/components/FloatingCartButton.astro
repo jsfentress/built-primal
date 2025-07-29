@@ -75,8 +75,9 @@ import IconShoppingBag from '@/assets/icons/IconShoppingBag.svg';
     updateFloatingCart();
     
     // If we just added an item, ensure the button is visible
-    const cart = event.detail;
-    if (cart && cart.items.length > 0) {
+    const customEvent = event as CustomEvent;
+    const cart = customEvent.detail;
+    if (cart && cart.items && cart.items.length > 0) {
       const button = document.getElementById('floating-cart-button');
       if (button) {
         button.classList.add('show');
