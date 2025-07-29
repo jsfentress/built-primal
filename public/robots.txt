@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://built-primal.vercel.app/sitemap-index.xml 
+Sitemap: https://built-primal.netlify.app/sitemap-index.xml 

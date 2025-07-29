@@ -1,5 +1,5 @@
 export const SITE = {
-  website: "https://built-primal.vercel.app/", // replace this with your deployed domain
+  website: "https://built-primal.netlify.app/", // replace this with your deployed domain
   author: "Ryan Cole",
   profile: "https://builtprimal.com/",
   desc: "Built Primal - Authority blog and store for mindful training, rope flow, and primal movement.",
