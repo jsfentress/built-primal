@@ -1,0 +1,86 @@
+---
+import IconShoppingBag from '@/assets/icons/IconShoppingBag.svg';
+---
+
+<a
+  href="/cart"
+  id="floating-cart-button"
+  class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl sm:hidden opacity-0 pointer-events-none scale-90"
+  aria-label="View cart"
+>
+  <IconShoppingBag class="h-6 w-6" />
+  <span
+    id="floating-cart-count"
+    class="absolute -top-1 -right-1 bg-background text-accent text-xs font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center border border-accent hidden"
+  >
+    0
+  </span>
+</a>
+
+<style>
+  #floating-cart-button.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  
+  #floating-cart-button.bounce {
+    animation: bounce 0.5s ease-in-out;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+</style>
+
+<script>
+  import { getCartItemCount } from '@/lib/cart';
+
+  function updateFloatingCart() {
+    const count = getCartItemCount();
+    const button = document.getElementById('floating-cart-button');
+    const countElement = document.getElementById('floating-cart-count');
+    
+    if (button && countElement) {
+      if (count > 0) {
+        // Show the floating button on mobile
+        button.classList.add('show');
+        
+        // Update count
+        countElement.textContent = count.toString();
+        countElement.classList.remove('hidden');
+        
+        // Add bounce animation
+        button.classList.add('bounce');
+        setTimeout(() => {
+          button.classList.remove('bounce');
+        }, 500);
+      } else {
+        // Hide if cart is empty
+        button.classList.remove('show');
+        countElement.classList.add('hidden');
+      }
+    }
+  }
+
+  // Initial check
+  document.addEventListener('astro:page-load', () => {
+    // Small delay to ensure cart is loaded
+    setTimeout(updateFloatingCart, 100);
+  });
+
+  // Update when cart changes
+  window.addEventListener('cart-updated', (event) => {
+    updateFloatingCart();
+    
+    // If we just added an item, ensure the button is visible
+    const cart = event.detail;
+    if (cart && cart.items.length > 0) {
+      const button = document.getElementById('floating-cart-button');
+      if (button) {
+        button.classList.add('show');
+      }
+    }
+  });
+</script>

@@ -15,7 +15,10 @@ export default function AddToCartButton({ product }: Props) {
     try {
       // Dynamic import to avoid SSR issues
       const { addToCart } = await import('@/lib/cart');
-      addToCart(product);
+      const updatedCart = addToCart(product);
+      
+      // Ensure the cart-updated event is fired
+      window.dispatchEvent(new CustomEvent('cart-updated', { detail: updatedCart }));
       
       setButtonText('Added to Cart!');
       setTimeout(() => {
