@@ -1,8 +1,8 @@
 ---
 title: "Move Primal: Rediscover Your Natural Movement Patterns for Lifelong Strength"
 description: "Master fundamental human movement patterns—crawl, squat, hinge, lunge, rotate, and gait. Build evolutionary strength, mobility, and resilience through primal movement training that reconnects you with your body's natural capabilities."
-pubDatetime: 2025-01-06T20:00:00.000Z
-modDatetime: 2025-01-06T20:00:00.000Z
+pubDatetime: 2025-07-30T14:00:00.000Z
+modDatetime: 2025-07-30T14:00:00.000Z
 author: "Ryan Cole"
 featured: true
 draft: false

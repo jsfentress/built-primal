@@ -1,8 +1,8 @@
 ---
 title: "Breath Mastery: Evidence-Based Breathing Protocols for Performance and Resilience"
 description: "Master evidence-backed breath training and breath-holding protocols with a safety-first approach. Learn CO2 and O2 tables, box breathing, pranayama techniques, and sport-specific applications for enhanced performance, stress resilience, and mental clarity."
-pubDatetime: 2025-01-06T20:30:00.000Z
-modDatetime: 2025-01-06T20:30:00.000Z
+pubDatetime: 2025-07-30T14:30:00.000Z
+modDatetime: 2025-07-30T14:30:00.000Z
 author: "Ryan Cole"
 featured: true
 draft: false

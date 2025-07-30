@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import TopBar from "@/components/TopBar.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
@@ -24,6 +25,7 @@ const latestPosts = sortedPosts.slice(0, 6); // Get 6 latest posts for carousel
 ---
 
 <Layout>
+  <TopBar />
   <Header />
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">

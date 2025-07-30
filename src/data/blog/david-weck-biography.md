@@ -1,11 +1,11 @@
 ---
 title: "David Weck: The Revolutionary Mind Behind BOSU Ball and Rope Flow Training"
 description: "Discover the extraordinary journey of David Weck—from a NYC fitness instructor with chronic back pain to becoming one of America's most prolific fitness inventors. Learn how he created the BOSU ball, pioneered rope flow training, and continues revolutionizing functional movement through WeckMethod."
-pubDatetime: 2025-01-06T19:30:00.000Z
-modDatetime: 2025-01-06T19:30:00.000Z
+pubDatetime: 2025-07-30T15:00:00.000Z
+modDatetime: 2025-07-30T15:00:00.000Z
 author: "Ryan Cole"
 featured: true
-draft: false
+draft: true
 tags: ["rope-flow", "bosu-ball", "functional-fitness", "biomechanics", "weckmethod", "innovation", "movement-training"]
 canonicalURL: "https://built-primal.netlify.app/posts/david-weck-biography"
 ---

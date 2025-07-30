@@ -1,8 +1,8 @@
 ---
 title: "Primal Lifestyle: Recovery, Nutrition, Sleep, and Mindset for Sustainable Performance"
 description: "Build a complete lifestyle system that supports your training gains. Master evidence-based recovery protocols, ancestral nutrition principles, sleep optimization, and mental resilience strategies for lifelong vitality and performance."
-pubDatetime: 2025-01-06T20:45:00.000Z
-modDatetime: 2025-01-06T20:45:00.000Z
+pubDatetime: 2025-07-30T14:45:00.000Z
+modDatetime: 2025-07-30T14:45:00.000Z
 author: "Ryan Cole"
 featured: true
 draft: false

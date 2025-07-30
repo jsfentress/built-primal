@@ -1,77 +1,129 @@
 ---
 ---
 
-<section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-accent/10 via-accent/5 to-background border border-accent/20 p-8 md:p-12">
-  <!-- Background decoration -->
-  <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/10 blur-3xl"></div>
-  <div class="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-accent/10 blur-3xl"></div>
+<section class="my-16 px-4">
+  <div class="max-w-4xl mx-auto bg-white dark:bg-background rounded-lg shadow-lg border border-gray-100 dark:border-border overflow-hidden">
   
-  <div class="relative z-10 mx-auto max-w-2xl text-center">
-    <h2 class="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-      Join the Movement
-    </h2>
-    <p class="mb-8 text-lg text-muted-foreground">
-      Get weekly insights on mindful training, exclusive workouts, and be the first to know about new products and special offers.
-    </p>
-    
-    <form 
-      id="newsletter-form"
-      class="flex flex-col gap-4 sm:flex-row sm:gap-2"
-      data-netlify="true"
-      name="newsletter"
-      method="POST"
-    >
-      <input type="hidden" name="form-name" value="newsletter" />
+    <!-- Main Content -->
+    <div class="p-8 md:p-12">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+        The Primal Movement Newsletter
+      </h2>
       
-      <div class="relative flex-1">
-        <input
-          type="email"
-          name="email"
-          id="email"
-          required
-          placeholder="Enter your email"
-          class="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
-        />
+      <div class="text-center mb-8">
+        <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-4">
+          Hey, I'm Ryan. Every Monday, I share:
+        </p>
+        <ul class="text-left inline-block space-y-2">
+          <li class="flex items-start gap-2">
+            <span class="text-accent text-xl">→</span>
+            <span><strong>3 primal movement patterns</strong> to unlock your body</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent text-xl">→</span>
+            <span><strong>2 recovery techniques</strong> that actually work</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent text-xl">→</span>
+            <span><strong>1 mindset breakthrough</strong> from elite performers</span>
+          </li>
+        </ul>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">
+          Join 10,000+ athletes and coaches getting 1% better every week
+        </p>
       </div>
-      
-      <button
-        type="submit"
-        class="group relative overflow-hidden rounded-lg bg-accent px-6 py-3 font-medium text-background transition-all hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <span class="relative z-10 flex items-center justify-center gap-2">
-          Subscribe
-          <svg 
-            class="h-4 w-4 transition-transform group-hover:translate-x-1" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </span>
-      </button>
-    </form>
     
-    <!-- Success message -->
-    <div id="newsletter-success" class="mt-4 hidden">
+      <!-- Form -->
+      <div class="max-w-md mx-auto mb-8">
+        <form 
+          id="newsletter-form"
+          class="flex flex-col gap-3"
+          data-netlify="true"
+          name="newsletter"
+          method="POST"
+        >
+          <input type="hidden" name="form-name" value="newsletter" />
+          
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            placeholder="Your best email"
+            class="w-full rounded-md border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+          
+          <button
+            type="submit"
+            class="w-full rounded-md bg-accent px-6 py-3 font-semibold text-white transition-all hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center gap-2"
+          >
+            Get Free Movement Tips
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </form>
+        <p class="text-xs text-center text-gray-500 mt-2">
+          No spam. Unsubscribe anytime.
+        </p>
+      </div>
+    
+      <!-- Social Proof -->
+      <div class="text-center mb-8">
+        <div class="flex justify-center items-center gap-1 mb-2">
+          <span class="text-yellow-400">★★★★★</span>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Rated 4.9/5 by 500+ newsletter subscribers
+        </p>
+      </div>
+    
+      <!-- Success/Error messages -->
+      <div id="newsletter-success" class="hidden">
       <p class="flex items-center justify-center gap-2 text-sm text-green-600 dark:text-green-400">
         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        Success! Check your email to confirm your subscription.
+        You're in! Check your email to confirm.
       </p>
     </div>
     
-    <!-- Error message -->
-    <div id="newsletter-error" class="mt-4 hidden">
-      <p class="text-sm text-red-600 dark:text-red-400">
-        Something went wrong. Please try again.
-      </p>
+      <div id="newsletter-error" class="hidden">
+        <p class="text-sm text-red-600 dark:text-red-400 text-center">
+          Something went wrong. Please try again.
+        </p>
+      </div>
     </div>
     
-    <p class="mt-4 text-xs text-muted-foreground">
-      No spam, ever. Unsubscribe anytime.
-    </p>
+    <!-- Bottom Testimonials Section -->
+    <div class="bg-gray-50 dark:bg-muted/20 px-8 py-6 border-t border-gray-100 dark:border-border">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div>
+          <p class="text-gray-700 dark:text-gray-300 font-medium mb-1">
+            "This newsletter transformed my training approach completely."
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 text-xs">
+            — Sarah K., CrossFit Coach
+          </p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300 font-medium mb-1">
+            "Better than any $500 course I've taken. Pure gold every week."
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 text-xs">
+            — Mike D., Personal Trainer
+          </p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300 font-medium mb-1">
+            "Monday mornings are now my favorite part of the week!"
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 text-xs">
+            — Lisa R., Yoga Instructor
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -130,14 +182,7 @@
         } finally {
           // Re-enable form
           submitButton.disabled = false;
-          submitButton.innerHTML = `
-            <span class="relative z-10 flex items-center justify-center gap-2">
-              Subscribe
-              <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          `;
+          submitButton.innerHTML = `Get Free Movement Tips <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>`;
         }
       });
     }

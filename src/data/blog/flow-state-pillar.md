@@ -1,8 +1,8 @@
 ---
 title: "Flow State: Master Continuous Movement for Peak Performance and Mental Clarity"
 description: "Discover the science and practice of flow state training through continuous, skill-based movement sequences. Learn rope flow, animal flow, and movement meditation techniques that build coordination, mental resilience, and athletic grace."
-pubDatetime: 2025-01-06T20:15:00.000Z
-modDatetime: 2025-01-06T20:15:00.000Z
+pubDatetime: 2025-07-30T14:15:00.000Z
+modDatetime: 2025-07-30T14:15:00.000Z
 author: "Ryan Cole"
 featured: true
 draft: false

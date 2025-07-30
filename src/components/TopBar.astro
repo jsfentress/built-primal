@@ -1,0 +1,120 @@
+---
+---
+
+<div id="top-bar" class="bg-muted/50 border-b border-border/30 py-2 px-4 text-center">
+  <form 
+    class="flex items-center justify-center gap-2 max-w-lg mx-auto"
+    data-netlify="true"
+    name="topbar-newsletter"
+    method="POST"
+    id="topbar-form"
+  >
+    <input type="hidden" name="form-name" value="topbar-newsletter" />
+    <label for="topbar-email" class="text-sm text-muted-foreground hidden sm:inline">
+      Get weekly movement tips:
+    </label>
+    <input
+      type="email"
+      name="email"
+      id="topbar-email"
+      required
+      placeholder="Enter your email"
+      class="text-sm px-3 py-1 rounded border border-border bg-background focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent flex-1 max-w-[200px]"
+    />
+    <button
+      type="submit"
+      class="text-sm px-3 py-1 bg-accent text-white rounded hover:bg-accent/90 transition-colors whitespace-nowrap"
+    >
+      Subscribe
+    </button>
+    <button
+      type="button"
+      id="close-topbar"
+      class="ml-2 text-muted-foreground hover:text-foreground"
+      aria-label="Close newsletter bar"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </form>
+  <div id="topbar-success" class="hidden text-sm text-green-600 dark:text-green-400">
+    ✓ You're subscribed! Check your email.
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // Check if user has closed the bar in this session
+    const topBarClosed = sessionStorage.getItem('topBarClosed');
+    const topBar = document.getElementById('top-bar');
+    
+    if (topBarClosed === 'true' && topBar) {
+      topBar.style.display = 'none';
+      return; // Don't set up event listeners if bar is hidden
+    }
+
+    // Handle close button
+    const closeBtn = document.getElementById('close-topbar');
+    if (closeBtn && topBar) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        topBar.style.display = 'none';
+        sessionStorage.setItem('topBarClosed', 'true');
+      });
+    }
+
+    // Handle form submission
+    const form = document.getElementById('topbar-form') as HTMLFormElement;
+    const successMsg = document.getElementById('topbar-success');
+    
+    if (form && successMsg && topBar) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '...';
+        
+        try {
+          const formData = new FormData(form);
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData as any).toString()
+          });
+          
+          if (response.ok) {
+            form.style.display = 'none';
+            successMsg.classList.remove('hidden');
+            
+            // Hide the whole bar after 3 seconds
+            setTimeout(() => {
+              topBar.style.display = 'none';
+              sessionStorage.setItem('topBarClosed', 'true');
+            }, 3000);
+            
+            // Track conversion
+            if (typeof window !== 'undefined' && 'gtag' in window) {
+              (window as any).gtag('event', 'sign_up', {
+                method: 'topbar_newsletter'
+              });
+            }
+          } else {
+            throw new Error('Submission failed');
+          }
+        } catch (error) {
+          console.error('Newsletter submission error:', error);
+          submitBtn.textContent = 'Try again';
+          setTimeout(() => {
+            submitBtn.textContent = originalText;
+          }, 2000);
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    }
+  });
+</script>
