@@ -7,6 +7,7 @@ import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconShoppingBag from "@/assets/icons/IconShoppingBag.svg";
+import Logo from "@/assets/images/logo.png";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
@@ -42,8 +43,13 @@ const isActive = (path: string) => {
     >
       <a
         href="/"
-        class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+        class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none flex items-center gap-3"
       >
+        <img 
+          src={Logo.src} 
+          alt="Built Primal Logo" 
+          class="h-12 w-12 sm:h-14 sm:w-14 object-contain flex-shrink-0"
+        />
         {SITE.title}
       </a>
       <nav
