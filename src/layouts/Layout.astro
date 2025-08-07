@@ -46,6 +46,32 @@ const structuredData = {
     },
   ],
 };
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Built Primal",
+  description: "Joint-friendly strength training for former gym rats",
+  url: "https://built-primal.netlify.app",
+  logo: "https://built-primal.netlify.app/logo.png",
+  sameAs: [
+    "https://twitter.com/builtprimal",
+    "https://instagram.com/builtprimal"
+  ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Built Primal",
+  description: "Joint-friendly strength training for former gym rats. Rebuild your body without destroying it.",
+  url: "https://built-primal.netlify.app",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://built-primal.netlify.app/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
 ---
 
 <!doctype html>
@@ -104,6 +130,16 @@ const structuredData = {
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(structuredData)}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(websiteSchema)}
     />
 
     <!-- Enable RSS feed auto-discovery  -->

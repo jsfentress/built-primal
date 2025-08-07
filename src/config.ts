@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://built-primal.netlify.app/", // replace this with your deployed domain
   author: "Ryan Cole",
   profile: "https://builtprimal.com/",
-  desc: "Built Primal - Authority blog and store for mindful training, rope flow, and primal movement.",
+  desc: "Sustainable strength training through primal movement patterns. Build resilience without breaking down.",
   title: "Built Primal",
   ogImage: "built-primal-og.jpg",
   lightAndDarkMode: true,
